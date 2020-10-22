@@ -1,0 +1,9 @@
+@import url('../styles/style.css');
+
+.main-content {
+    background-color:white;
+    width: 200px;
+    height: 300px;
+    border: 1px solid turquoise;
+    padding: 10px;
+  }
