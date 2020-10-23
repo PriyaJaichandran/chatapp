@@ -7,24 +7,25 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent implements OnInit {
-  signinform: FormGroup;
+  signform: FormGroup;
+
 
   constructor(
     private formBuilder: FormBuilder
   ) { }
 
   ngOnInit() {
-    this.signinform = this.formBuilder.group({
+    this.signform = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
   //Get form values
   get formObj() {
-    return this.signinform.controls;
+    return this.signform.controls;
   }
   //Onsubmit - Login service call
   onSubmit() {
-    console.log(this.formObj.username.value);
+    console.log(this.formObj.username1.value);
   }
 }

@@ -30,3 +30,8 @@
     display: table;
     clear: both;
   }
+  .error-alert{
+    font-style: normal;
+    color: chocolate;
+    font-size: 16px;
+  }
