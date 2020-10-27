@@ -4,11 +4,11 @@
     background-color: #f2f2f2;
     padding: 20px;
     box-sizing: border-box;
-    width:500px;
+    width:300px;
  }
  .center {
     margin: auto;
-    width: 60%;
+    width: 40%;
     border: 3px solid #f2f2f2;
     padding: 10px;
   }
@@ -29,4 +29,9 @@
     content: "";
     display: table;
     clear: both;
+  }
+  .error-alert{
+    font-style: normal;
+    color: chocolate;
+    font-size: 16px;
   }

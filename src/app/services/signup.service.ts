@@ -1,18 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {environment} from '../../environments/environment';
-import {apiconst} from '../util/restapi-constants';
+import { environment } from '../../environments/environment';
+import { apiconst } from '../util/restapi-constants';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError, map, publishReplay, refCount } from 'rxjs/operators';
-import {Userdetails} from './userdetails';
+import { Userdetails } from '../services/userdetails';
 
 @Injectable({
   providedIn: 'root'
 })
-
-export class SigninService {
-
-  userid;
+export class SignupService {
+  responseUser;
   // Http Options
   httpOptions = {
     headers: new HttpHeaders({
@@ -20,15 +18,17 @@ export class SigninService {
     })
   }
   constructor(private http: HttpClient) { }
-  //API Call : GET : User login
-  /*signinuser(userdetailsobj) {
-    return this.http.post<any>(environment.BASE_URL+'/'+apiconst.SIGNIN_USER, userdetailsobj).subscribe(data => {
-      console.log(data);
-      this.userid = data.id;
-    });
-  }*/
-  signinuser(user): Observable<Userdetails> {
-    return this.http.post<Userdetails>(environment.BASE_URL+'/'+apiconst.SIGNIN_USER, JSON.stringify(user), this.httpOptions)
+
+  getUserdetails(email):Observable<Userdetails>{
+    return this.http.get<Userdetails>(environment.BASE_URL + '/user/' + email)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    )
+  }
+
+  signupuser(user): Observable<Userdetails> {
+    return this.http.post<Userdetails>(environment.BASE_URL + '/' + apiconst.SIGNUP_USER, JSON.stringify(user), this.httpOptions)
       .pipe(
         retry(1),
         catchError(this.handleError)
@@ -46,4 +46,12 @@ export class SigninService {
     console.log(errorMessage);
     return throwError(errorMessage);
   }
+  //API Call : POST : Create User
+  /*signupuser(userdetailsobj) {
+    return this.http.post<any>(environment.BASE_URL+'/'+apiconst.SIGNIN_USER, userdetailsobj).subscribe(data => {
+      console.log(data);
+      this.responseUser = data;
+    });
+    }*/
+
 }

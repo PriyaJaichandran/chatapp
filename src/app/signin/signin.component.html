@@ -1,12 +1,21 @@
 <div class="container center">
     <h2>Sign In</h2>
-    <form>
+    <form [formGroup]="signinform" (ngSubmit)="onSubmit()">
+        <div class="error-alert">
+          <span>{{ errorMessage }}</span>  
+        </div>
+        <div style="margin-right: 30px;">
+            <span>Click <a routerLink="/signup">here</a> to Signup ..</span>
+          </div>
         <div class="row">
             <div class="col-25">
-                <label for="lbl-username">Email</label>
+                <label for="lbl-email">Email</label>
             </div>
             <div class="col-75">
-                <input type="text" formControlName="username" required minlength="4">
+                <input type="text" formControlName="email" [ngClass]="{ 'is-invalid': submitted && formObj.email.errors }">
+                <div *ngIf="submitted && formObj.email.errors" class="error-alert">
+                    <div *ngIf="signupform.controls.email.errors.required">Email is required</div>
+                </div>
             </div>
         </div>
         <div class="row">
@@ -14,11 +23,15 @@
                 <label for="lbl-password">Password</label>
             </div>
             <div class="col-75">
-                <input type="password" formControlName="password" class="form-control">
+                <input type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && formObj.password.errors }">
+                <div *ngIf="submitted && formObj.password.errors" class="error-alert">
+                    <div *ngIf="signupform.controls.password.errors.required">Password is required</div>
+                </div>
             </div>
         </div>
         <div class="row">
-            <button style="margin: 10px 20px;" (click)="onSubmit()">Sign In</button>
+            <button>SignIn</button>
+            <button type="reset" (click)="onReset()">Cancel</button>
         </div>
     </form>
 </div>

@@ -2,5 +2,20 @@
     Available users
 </div>
 <div class=main-content>
-    
+    <div style="overflow-x:auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let userobj of responseUser">
+                    <td><img src="../../assets/images/user_icon.png"></td>
+                    <td>{{userobj.user_name}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

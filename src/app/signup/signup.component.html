@@ -1,12 +1,15 @@
 <div class="container center">
     <h2>Sign Up</h2>
     <form [formGroup]="signupform" (ngSubmit)="onSubmit()">
+        <div class="error-alert">
+            <span>{{ errorMessage }}</span>  
+          </div>
         <div class="row">
             <div class="col-25">
                 <label for="lbl-username">Username</label>
             </div>
             <div class="col-75">
-                <input type="text" formControlName="user_name" [ngClass]="{ 'is-invalid': submitted && formObj.user_name.errors }">
+                <input type="text" formControlName="user_name" [ngClass]="{ 'is-invalid': submitted && formObj.user_name.errors }" (onfocus)=clearErrorAlert();>
                 <div *ngIf="submitted && formObj.user_name.errors" class="error-alert">
                     <div *ngIf="signupform.controls.user_name.errors.required">Username is required</div>
                 </div>

@@ -10,6 +10,7 @@ import { SigninComponent } from './signin/signin.component';
 import {FormGroup, FormsModule, Validators,ReactiveFormsModule} from '@angular/forms';
 import { SignupComponent } from './signup/signup.component';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { HomepageComponent } from './homepage/homepage.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
     LinkedusersComponent,
     ChatboxComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,

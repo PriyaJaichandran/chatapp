@@ -1,6 +1,12 @@
-<div class="element-text">
-    Welcome
-</div>
-<div class=box>
-    
-</div>
+<form [formGroup]="chatboxform">
+<div class="chat-messages">   
+    <div class="chat-messages-show-container">
+      <ul class="chat-messages-show-list" name="datalist" id="datalist">
+      </ul>
+    </div>
+    <div class="chat-messages-create-container"> 
+      <input class="chat-messages-create-input" type="text" formControlName="message">
+      <button  class="chat-messages-create-button" (click)="sendMessage();"> Send </button>
+    </div>
+ </div>
+</form>
