@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Userdetails } from '../services/userdetails';
 import { LinkedusersService } from '../services/linkedusers.service';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./linkedusers.component.css']
 })
 export class LinkedusersComponent implements OnInit {
-
+  @Output() public userinfo = new EventEmitter<any>();
   linkeduserform: FormGroup;
   user: Userdetails;
   submitted = false;
@@ -19,6 +19,9 @@ export class LinkedusersComponent implements OnInit {
   resMessage;
   router: Router;
   errorMessage;
+  userdata;
+  userObject;
+
   constructor(
     private formBuilder: FormBuilder,
     private linkeduserservice: LinkedusersService,
@@ -31,10 +34,18 @@ export class LinkedusersComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
-    this.linkeduserservice.getAllUsers().subscribe((data: {}) => {
+    if (sessionStorage['user']) {
+      this.userObject = JSON.parse(sessionStorage.user);
+    }
+    this.linkeduserservice.getAllUsers(this.userObject.email).subscribe(data => {
       this.responseUser = data;
+      this.userdata =this.responseUser.data;
+      console.log(this.userdata);
       this.resMessage = this.responseUser.message;
     })
   }
-
+  shareUserInfo(user){
+    console.log(user);
+    this.userinfo.emit(user);
+  }
 }

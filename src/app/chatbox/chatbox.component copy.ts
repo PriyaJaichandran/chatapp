@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import * as io from 'socket.io-client';
 import {FormGroup,FormBuilder, Validators} from '@angular/forms';
-import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
+
 @Component({
   selector: 'app-chatbox',
   templateUrl: './chatbox.component.html',
@@ -17,6 +17,7 @@ export class ChatboxComponent implements OnInit {
   chatboxform: FormGroup;
   userObject;
   selectedUserdata;
+  username;
   @Input() userFromParent;
   constructor(private formBuilder:FormBuilder) { }
 
@@ -28,17 +29,24 @@ export class ChatboxComponent implements OnInit {
     });
     if (sessionStorage['user']) {
       this.userObject = JSON.parse(sessionStorage.user);
+      this.username=this.userObject.username;
     }
-    console.log("selected user from linked module userFromParent");
-    console.log(this.userFromParent);
+    
     this.setupSocketConnection();
   }
   //Get form values
   get formObj() {
     return this.chatboxform.controls;
   }
+   connectUser () {  // Called whenever a user signs in
+  if (!this.username) return;
+  this.socket_conn.emit('userConnected', this.username);
+}
   setupSocketConnection() {
+    
     this.socket_conn = io(environment.SOCKET_ENDPOINT);
+    this.socket_conn.on('connect', this.connectUser);
+    //this.socket_conn.emit('userConnected', this.userObject.username);
     this.socket_conn.on('message-broadcast', (data: string) => {
       if (data) {
         const element = document.createElement('li');
@@ -54,8 +62,10 @@ export class ChatboxComponent implements OnInit {
     console.log('send message user obj');
     console.log(this.userObject);
     console.log(this.userObject.username);
+    console.log("selected user from linked module userFromParent");
+    console.log(this.userFromParent);
     this.messagedata = {
-      "username": this.userObject.username,
+      "username": this.userFromParent.user_name,
       "data": this.formObj.message.value
     }
     this.message=this.formObj.message.value;

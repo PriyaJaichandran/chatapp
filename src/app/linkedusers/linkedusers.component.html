@@ -1,5 +1,5 @@
 <div class="element-text">
-    Available users
+    Contacts
 </div>
 <div class=main-content>
     <div style="overflow-x:auto;">
@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let userobj of responseUser">
+                <tr *ngFor="let userobj of userdata" (click)="shareUserInfo(userobj)">
                     <td><img src="../../assets/images/user_icon.png"></td>
                     <td>{{userobj.user_name}}</td>
                 </tr>

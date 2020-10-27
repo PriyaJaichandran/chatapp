@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Userdetails } from '../services/userdetails';
-import {SigninService} from '../services/signin.service';
+import { SigninService } from '../services/signin.service';
 import { NGXLogger } from 'ngx-logger';
 import { Router } from '@angular/router';
 
@@ -18,12 +18,13 @@ export class SigninComponent implements OnInit {
   resMessage;
   router: Router;
   errorMessage;
+  userkey;
   constructor(
     private formBuilder: FormBuilder,
-    private signinservice : SigninService,
+    private signinservice: SigninService,
     private logger: NGXLogger,
     _router: Router
-  ) { this.router = _router;}
+  ) { this.router = _router; }
 
   ngOnInit() {
     this.signinform = this.formBuilder.group({
@@ -41,8 +42,8 @@ export class SigninComponent implements OnInit {
   }
   //Onsubmit - Login service call
   onSubmit() {
-    this.submitted =true;
-    if(this.signinform.invalid){
+    this.submitted = true;
+    if (this.signinform.invalid) {
       return;
     }
     let userdata = this.signinform.getRawValue();
@@ -51,13 +52,22 @@ export class SigninComponent implements OnInit {
     //this.signinservice.signinuser(this.user);
     this.signinservice.signinuser(this.user).subscribe((data: {}) => {
       this.responseUser = data;
-      this.resMessage=this.responseUser.message;
-      if(this.resMessage==='VALID PASSWORD'){
+      this.resMessage = this.responseUser.message;
+      if (this.resMessage === 'VALID PASSWORD') {
+        //Session storage
+        if (typeof (Storage) !== "undefined") {
+          this.userkey = {
+            "username": this.responseUser.data.user_name,
+            "email": this.responseUser.data.email,
+            "auth": "success"
+          }
+          sessionStorage.user = JSON.stringify({username: this.responseUser.data.user_name,email:this.responseUser.data.email,auth:"success"});
+        }
         this.router.navigate(['/homepage']);
       }
-      else if(this.resMessage==='INVALID PASSWORD'){
+      else if (this.resMessage === 'INVALID PASSWORD') {
         this.onReset();
-        this.errorMessage='Please enter valid credentials';
+        this.errorMessage = 'Please enter valid credentials';
       }
 
     })

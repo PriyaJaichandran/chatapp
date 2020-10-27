@@ -19,8 +19,9 @@ export class LinkedusersService {
     }
     constructor(private http: HttpClient) { }
   
-    getAllUsers():Observable<Userdetails>{
-      return this.http.get<Userdetails>(environment.BASE_URL + apiconst)
+    getAllUsers(email):Observable<Userdetails>{
+      console.log('all user service call')
+      return this.http.get<Userdetails>(environment.BASE_URL + apiconst.LIST_USER + '/' + email)
       .pipe(
         retry(1),
         catchError(this.handleError)
