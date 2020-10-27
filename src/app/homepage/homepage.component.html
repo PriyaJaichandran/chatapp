@@ -1,11 +1,20 @@
 <div class="container">
-    <div class="flex-container" fxLayout="row">
-      <div>
-          <span><a href="logout()">Logout</a></span>
-      </div>
-      <div class="side-content"><app-linkedusers (userinfo)="handleResults($event)"></app-linkedusers></div> 
-      <div class="main-content">
-        <div *ngIf="selectedUserdata">{{selectedUserdata.user_name}}</div>
-        <app-chatbox [userFromParent]=selectedUserdata></app-chatbox></div> 
+    <div style="padding-left: 45%;width: 10%;color: khaki;" class="dropdown">
+        <ngx-avatar name="Om Muruga" value="28%" bgColor="#FF0000" fgColor="#C0C0C0" size="40" textSizeRatio="2.5"
+            [round]="true"></ngx-avatar>
+            <div class="dropdown-content">
+                <a href="#">Available</a>
+                <a href="#" (click)=logout()>Logout</a>
+               </div>
+    </div>
+    <div class="flex-container layout-content" fxLayout="row">
+
+        <div class="side-content">
+            <app-linkedusers (userinfo)="handleResults($event)"></app-linkedusers>
+        </div>
+        <div class="main-content">
+            <div *ngIf="selectedUserdata">{{selectedUserdata.user_name}}</div>
+            <app-chatbox [userFromParent]=selectedUserdata></app-chatbox>
+        </div>
     </div>
 </div>

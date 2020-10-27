@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import * as io from 'socket.io-client';
 import {FormGroup,FormBuilder, Validators} from '@angular/forms';
-import { listLazyRoutes } from '@angular/compiler/src/aot/lazy_routes';
+import {ChatsocketService} from '../services/chatsocket.service';
 @Component({
   selector: 'app-chatbox',
   templateUrl: './chatbox.component.html',
@@ -17,8 +17,14 @@ export class ChatboxComponent implements OnInit {
   chatboxform: FormGroup;
   userObject;
   selectedUserdata;
+  //socket = io();
   @Input() userFromParent;
-  constructor(private formBuilder:FormBuilder) { }
+  constructor(private formBuilder:FormBuilder,
+    private chatservice  :ChatsocketService) { }
+    sendMsg() {
+      this.chatservice.sendMessage(this.message);
+      this.message = '';
+    }
 
   ngOnInit() {
     //Defining Form
@@ -29,16 +35,21 @@ export class ChatboxComponent implements OnInit {
     if (sessionStorage['user']) {
       this.userObject = JSON.parse(sessionStorage.user);
     }
-    console.log("selected user from linked module userFromParent");
-    console.log(this.userFromParent);
     this.setupSocketConnection();
   }
   //Get form values
   get formObj() {
     return this.chatboxform.controls;
   }
+  setUsername() {
+    this.socket_conn.emit('setUsername', this.userFromParent.user_name);
+ };
   setupSocketConnection() {
     this.socket_conn = io(environment.SOCKET_ENDPOINT);
+    console.log('emit username');
+    console.log(this.userObject.username);
+    this.socket_conn.emit('setUsername', this.userObject.username);
+
     this.socket_conn.on('message-broadcast', (data: string) => {
       if (data) {
         const element = document.createElement('li');
@@ -51,14 +62,13 @@ export class ChatboxComponent implements OnInit {
     });
   }
   sendMessage() {
-    console.log('send message user obj');
-    console.log(this.userObject);
-    console.log(this.userObject.username);
     this.messagedata = {
-      "username": this.userObject.username,
+      "username": this.userFromParent.user_name,
       "data": this.formObj.message.value
     }
     this.message=this.formObj.message.value;
+    console.log('this is user message >>>')
+    console.log(this.message)
     this.socket_conn.emit('message', this.messagedata);
     const element = document.createElement('li');
     element.innerHTML = this.message;
@@ -67,7 +77,7 @@ export class ChatboxComponent implements OnInit {
     element.style.margin = '10px';
     element.style.textAlign = 'right';
     document.getElementById('datalist').appendChild(element);
-    //document.getElementById('message').nodeValue="";
+    this.chatboxform.controls.message=null;
   }
   handleResults(userinfo) {
     this.selectedUserdata = userinfo

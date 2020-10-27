@@ -11,7 +11,9 @@ import {FormGroup, FormsModule, Validators,ReactiveFormsModule} from '@angular/f
 import { SignupComponent } from './signup/signup.component';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { HomepageComponent } from './homepage/homepage.component';
-
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:3003', options: {} };
+import {AvatarModule } from 'ngx-avatar';
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +30,9 @@ import { HomepageComponent } from './homepage/homepage.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    LoggerModule.forRoot({serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR})
+    LoggerModule.forRoot({serverLoggingUrl: '/api/logs', level: NgxLoggerLevel.DEBUG, serverLogLevel: NgxLoggerLevel.ERROR}),
+    SocketIoModule.forRoot(config),
+    AvatarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

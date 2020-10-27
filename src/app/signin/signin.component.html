@@ -1,12 +1,9 @@
-<div class="container center">
+<div class="center">
     <h2>Sign In</h2>
     <form [formGroup]="signinform" (ngSubmit)="onSubmit()">
         <div class="error-alert">
           <span>{{ errorMessage }}</span>  
-        </div>
-        <div style="margin-right: 30px;">
-            <span>Click <a routerLink="/signup">here</a> to Signup ..</span>
-          </div>
+        </div> 
         <div class="row">
             <div class="col-25">
                 <label for="lbl-email">Email</label>
@@ -29,9 +26,12 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <button>SignIn</button>
-            <button type="reset" (click)="onReset()">Cancel</button>
+        <div class="btnrow">
+            <button class="btn">SignIn</button>
+            <button class="btn" type="reset" (click)="onReset()">Cancel</button>
+        </div>
+        <div style="margin-right: 30px;">
+                <span>Click <a routerLink="/signup">here</a> to Signup ..</span>
         </div>
     </form>
 </div>

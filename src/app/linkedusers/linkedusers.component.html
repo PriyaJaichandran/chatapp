@@ -12,7 +12,8 @@
             </thead>
             <tbody>
                 <tr *ngFor="let userobj of userdata" (click)="shareUserInfo(userobj)">
-                    <td><img src="../../assets/images/user_icon.png"></td>
+                    <td><ngx-avatar name={{userobj.user_name}} value="28%" bgColor="#FF0000" fgColor="#C0C0C0" size="40" textSizeRatio="2.5"
+                        [round]="true"></ngx-avatar></td>
                     <td>{{userobj.user_name}}</td>
                 </tr>
             </tbody>
