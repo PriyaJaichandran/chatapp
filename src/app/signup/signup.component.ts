@@ -57,13 +57,17 @@ export class SignupComponent implements OnInit {
       this.resMessage = this.responseUser.message;
       if (this.resMessage === 'USER FOUND') {
         this.errorMessage = 'Email already exists.';
-        this.onReset(); 
+        this.onReset();
       } else {
         //Create service call
         this.signupservice.signupuser(this.user).subscribe((data: {}) => {
           this.responseUser = data;
           this.resMessage = this.responseUser.message;
           if (this.resMessage === 'USER CREATED') {
+            //Session storage
+            if (typeof (Storage) !== "undefined") {
+              sessionStorage.user = JSON.stringify({ username: this.responseUser.data.user_name, email: this.responseUser.data.email, auth: "success" });
+            }
             this.router.navigate(['/homepage']);
           }
         })

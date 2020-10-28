@@ -1,11 +1,13 @@
 <div class="container">
     <div style="padding-left: 45%;width: 10%;color: khaki;" class="dropdown">
-        <ngx-avatar name="Om Muruga" value="28%" bgColor="#FF0000" fgColor="#C0C0C0" size="40" textSizeRatio="2.5"
+        <div *ngIf="userObject">
+        \<ngx-avatar name={{userObject.username}} value="28%" bgColor="#FF0000" fgColor="#C0C0C0" size="40" textSizeRatio="2.5"
             [round]="true"></ngx-avatar>
             <div class="dropdown-content">
                 <a href="#">Available</a>
                 <a href="#" (click)=logout()>Logout</a>
                </div>
+            </div>
     </div>
     <div class="flex-container layout-content" fxLayout="row">
 

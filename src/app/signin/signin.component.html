@@ -11,7 +11,7 @@
             <div class="col-75">
                 <input type="text" formControlName="email" [ngClass]="{ 'is-invalid': submitted && formObj.email.errors }">
                 <div *ngIf="submitted && formObj.email.errors" class="error-alert">
-                    <div *ngIf="signupform.controls.email.errors.required">Email is required</div>
+                    <div *ngIf="signinform.controls.email.errors.required">Email is required</div>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
             <div class="col-75">
                 <input type="password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && formObj.password.errors }">
                 <div *ngIf="submitted && formObj.password.errors" class="error-alert">
-                    <div *ngIf="signupform.controls.password.errors.required">Password is required</div>
+                    <div *ngIf="signinform.controls.password.errors.required">Password is required</div>
                 </div>
             </div>
         </div>

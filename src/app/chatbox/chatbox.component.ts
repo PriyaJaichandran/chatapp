@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import * as io from 'socket.io-client';
 import {FormGroup,FormBuilder, Validators} from '@angular/forms';
-import {ChatsocketService} from '../services/chatsocket.service';
 @Component({
   selector: 'app-chatbox',
   templateUrl: './chatbox.component.html',
@@ -17,12 +16,9 @@ export class ChatboxComponent implements OnInit {
   chatboxform: FormGroup;
   userObject;
   selectedUserdata;
-  //socket = io();
   @Input() userFromParent;
-  constructor(private formBuilder:FormBuilder,
-    private chatservice  :ChatsocketService) { }
+  constructor(private formBuilder:FormBuilder) { }
     sendMsg() {
-      this.chatservice.sendMessage(this.message);
       this.message = '';
     }
 
@@ -77,7 +73,6 @@ export class ChatboxComponent implements OnInit {
     element.style.margin = '10px';
     element.style.textAlign = 'right';
     document.getElementById('datalist').appendChild(element);
-    this.chatboxform.controls.message=null;
   }
   handleResults(userinfo) {
     this.selectedUserdata = userinfo

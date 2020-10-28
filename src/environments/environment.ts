@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  SOCKET_ENDPOINT : 'localhost:3001',
+  SOCKET_ENDPOINT : 'localhost:8000',
   BASE_URL:'http://localhost:3000/api',
   IMG_URL:'../../assets/images/'
 };

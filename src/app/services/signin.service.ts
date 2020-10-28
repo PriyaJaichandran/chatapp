@@ -28,7 +28,7 @@ export class SigninService {
     });
   }*/
   signinuser(user): Observable<Userdetails> {
-    return this.http.post<Userdetails>(environment.BASE_URL+'/'+apiconst.SIGNIN_USER, JSON.stringify(user), this.httpOptions)
+    return this.http.post<Userdetails>(environment.BASE_URL+apiconst.SIGNIN_USER, JSON.stringify(user), this.httpOptions)
       .pipe(
         retry(1),
         catchError(this.handleError)
